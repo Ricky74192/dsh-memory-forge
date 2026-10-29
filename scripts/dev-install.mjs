@@ -2,7 +2,7 @@
 /**
  * Link this checkout into a DSH profile for local development.
  *
- * Copies the package into <profile>/node_modules/dsh-memory and writes the
+ * Copies the package into <profile>/node_modules/dsh-memory-forge and writes the
  * loader patch row that mounts it. Intended for a throwaway development
  * profile (for example `dsh --profile memdev`); production use installs the
  * bundle through the plugin manager or `dsh plugin add`.
@@ -42,7 +42,7 @@ if (options.help) {
 
 const dshHome = process.env.DSH_HOME ?? join(homedir(), '.dsh')
 const profileDir = join(dshHome, 'profiles', options.profile)
-const target = join(profileDir, 'node_modules', 'dsh-memory')
+const target = join(profileDir, 'node_modules', 'dsh-memory-forge')
 
 if (!existsSync(profileDir)) {
   console.error(`profile directory not found: ${profileDir}`)
@@ -73,7 +73,7 @@ for (const name of readdirSync(packageRoot)) {
 const pathLine = (label, value) => (value === '' ? '' : `\n        ${label}: '${value.replaceAll('\\', '/')}'`)
 const patch = `- insert:
     - id: memory
-      name: 'dsh-memory'
+      name: 'dsh-memory-forge'
       config:
         maxRecallItems: 4
         recallMinScore: 0.15

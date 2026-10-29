@@ -23,7 +23,7 @@ function session(events) {
  * @returns {MemoryStore} the store.
  */
 function store() {
-  return new MemoryStore({ root: mkdtempSync(join(tmpdir(), 'dsh-memory-capture-')), now: () => NOW, logger: { warn: () => {} } })
+  return new MemoryStore({ root: mkdtempSync(join(tmpdir(), 'dsh-memory-forge-capture-')), now: () => NOW, logger: { warn: () => {} } })
 }
 
 const CONFIG = { minCaptureChars: 10, maxCaptureChars: 4000 }
@@ -118,7 +118,7 @@ test('captureTurn stores previous-turn assistant text once per sequence', () => 
 test('proposedUserText picks the newest user-authored message', () => {
   const messages = [
     userMessage('the actual question from the user'),
-    userMessage('recalled memory block', { kind: 'dsh-memory' }),
+    userMessage('recalled memory block', { kind: 'dsh-memory-forge' }),
     assistantMessage('not a user message'),
   ]
   assert.equal(proposedUserText(messages), 'the actual question from the user')
@@ -129,7 +129,7 @@ test('latestUserText falls back to the session log and skips own injections', ()
   const fakeSession = session([
     { type: 'turn/start', data: { turn: 1 } },
     { type: 'user/message', data: userMessage('question in the log') },
-    { type: 'user/message', data: userMessage('recall block in the log', { kind: 'dsh-memory' }) },
+    { type: 'user/message', data: userMessage('recall block in the log', { kind: 'dsh-memory-forge' }) },
   ])
   assert.equal(latestUserText(fakeSession, 1), 'question in the log')
 })
@@ -137,7 +137,7 @@ test('latestUserText falls back to the session log and skips own injections', ()
 test('recallMessage is a replayable user message with a typed source', () => {
   const message = recallMessage('<system-reminder>notes</system-reminder>')
   assert.equal(message.role, 'user')
-  assert.equal(message.source.kind, 'dsh-memory')
+  assert.equal(message.source.kind, 'dsh-memory-forge')
   assert.equal(message.source.sections[0].name, 'memory-recall')
   assert.equal(typeof message.id, 'string')
   assert.ok(message.id.length > 0)

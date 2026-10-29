@@ -1,5 +1,5 @@
 /**
- * Model-facing tools of dsh-memory.
+ * Model-facing tools of dsh-memory-forge.
  *
  * Tools are plain registry definitions rather than `defineTool()` values: the
  * plugin ships as a dependency-free Host bundle, and importing
@@ -92,7 +92,7 @@ export function buildTools(context) {
           sessionId: sessionOf(exec),
           source: 'memory_save',
         })
-        logger.info?.(`dsh-memory: saved ${record.id} (${record.scope})`)
+        logger.info?.(`dsh-memory-forge: saved ${record.id} (${record.scope})`)
         return {
           id: record.id,
           scope: record.scope,
@@ -264,7 +264,7 @@ export function buildTools(context) {
           sessionId: sessionOf(exec),
           source: 'memory_distill_skill',
         })
-        logger.info?.(`dsh-memory: ${result.status} skill ${result.path}`)
+        logger.info?.(`dsh-memory-forge: ${result.status} skill ${result.path}`)
         return result
       },
     },

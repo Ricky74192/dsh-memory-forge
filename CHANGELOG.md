@@ -10,7 +10,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-- Dependency-free Cordis Host plugin (`dsh-memory`) that installs as a DSH bundle.
+- Dependency-free Cordis Host plugin (`dsh-memory-forge`) that installs as a DSH bundle.
 - Automatic turn capture into append-only JSONL namespaces, one per workspace
   plus a shared `global` namespace, with sequence and text deduplication.
 - Automatic recall injected as a durable `user` message before the first step of

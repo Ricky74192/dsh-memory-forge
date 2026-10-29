@@ -1,5 +1,5 @@
 /**
- * Durable storage for dsh-memory.
+ * Durable storage for dsh-memory-forge.
  *
  * Memories live in append-only JSONL files, one namespace per workspace plus an
  * optional `global` namespace. JSONL keeps the format inspectable and diffable
@@ -108,7 +108,7 @@ export class MemoryStore {
     try {
       raw = readFileSync(file, 'utf8')
     } catch (error) {
-      this.logger?.warn(`dsh-memory: cannot read ${file}: ${error instanceof Error ? error.message : String(error)}`)
+      this.logger?.warn(`dsh-memory-forge: cannot read ${file}: ${error instanceof Error ? error.message : String(error)}`)
       return []
     }
     for (const line of raw.split('\n')) {
@@ -121,7 +121,7 @@ export class MemoryStore {
         skipped += 1
       }
     }
-    if (skipped > 0) this.logger?.warn(`dsh-memory: skipped ${skipped} damaged line(s) in ${file}`)
+    if (skipped > 0) this.logger?.warn(`dsh-memory-forge: skipped ${skipped} damaged line(s) in ${file}`)
     this.cache.set(file, { mtimeMs: stats.mtimeMs, size: stats.size, entries })
     return entries
   }

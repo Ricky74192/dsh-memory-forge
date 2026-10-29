@@ -1,5 +1,5 @@
 /**
- * dsh-memory — long-term memory and self-evolving skills for DeepSeek Harness.
+ * dsh-memory-forge — long-term memory and self-evolving skills for DeepSeek Harness.
  *
  * The plugin adds three things to a profile:
  *   1. Durable, searchable memories stored as JSONL under `$DSH_HOME/memory`.
@@ -16,7 +16,7 @@
  *     derived, human-inspectable index, never a second session log.
  *   - Anything the model sees is a normal `user` message, so recall replays,
  *     compacts, and survives session resume like any other message.
- * @module dsh-memory
+ * @module dsh-memory-forge
  */
 import { appendFileSync, mkdirSync } from 'node:fs'
 import { randomUUID } from 'node:crypto'
@@ -28,7 +28,7 @@ import { buildTools } from './src/tools.js'
 import { RECALL_HEADER, messageText, renderRecall } from './src/render.js'
 
 /** Cordis plugin name used by loader diagnostics and as the message source kind. */
-export const name = 'dsh-memory'
+export const name = 'dsh-memory-forge'
 
 /** Services this plugin needs before it can activate. */
 export const inject = ['tools']
@@ -57,7 +57,7 @@ function createLogger(ctx, config) {
     }
     try {
       const target = ctx?.logger?.[level]
-      if (typeof target === 'function') target.call(ctx.logger, `dsh-memory: ${message}`)
+      if (typeof target === 'function') target.call(ctx.logger, `dsh-memory-forge: ${message}`)
     } catch {
       /* the logger is optional in minimal profiles */
     }

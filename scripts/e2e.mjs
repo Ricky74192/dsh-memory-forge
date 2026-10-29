@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Offline end-to-end check for dsh-memory.
+ * Offline end-to-end check for dsh-memory-forge.
  *
  * Runs two real headless harness turns against the bundled mock provider:
  *   phase A — the plugin's `memory_save` tool stores a fact;
@@ -241,7 +241,7 @@ check(existsSync(skillFile), `skill bundle written: ${skillFile}`)
 const skillDocument = existsSync(skillFile) ? readFileSync(skillFile, 'utf8') : ''
 check(skillDocument.includes(`name: ${skillName}`), 'skill frontmatter carries the kebab-case name')
 check(skillDocument.includes('pnpm pack'), 'skill body carries the distilled procedure')
-check(skillDocument.includes('generatedBy: dsh-memory'), 'skill frontmatter records provenance')
+check(skillDocument.includes('generatedBy: dsh-memory-forge'), 'skill frontmatter records provenance')
 
 console.log('phase D: the harness discovers the distilled skill')
 const phaseD = await turn('d', 'List the skills you can load.', [{ text: 'Listed the catalogue.' }])

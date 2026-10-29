@@ -68,7 +68,7 @@ test('renderSkillDocument emits frontmatter the skill registry accepts', () => {
   assert.match(frontmatter, /^name: fix-windows-build$/m)
   assert.match(frontmatter, /^description: Use when the Windows build fails/m)
   assert.match(frontmatter, /^whenToUse: The build passes on CI but fails locally\.$/m)
-  assert.match(frontmatter, /^  generatedBy: dsh-memory$/m)
+  assert.match(frontmatter, /^  generatedBy: dsh-memory-forge$/m)
   assert.match(frontmatter, /^    - mem_1$/m)
   assert.ok(document.includes('## Steps'))
   assert.ok(document.endsWith('\n'))

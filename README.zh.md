@@ -1,8 +1,8 @@
-# dsh-memory
+# dsh-memory-forge
 
-给 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（`dsh`）用的长期记忆与自进化技能插件。
+给 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（`dsh`）用的记忆锻造插件：**记忆不是仓库，是锻造炉**——对话被捕获、与当前请求相关者被召回、验证过的流程被锻造成技能。
 
-`dsh-memory` 是一个零依赖的 Cordis Host 插件，为 DSH profile 补上发行版没有的四件事：
+`dsh-memory-forge` 是一个零依赖的 Cordis Host 插件，为 DSH profile 补上发行版没有的四件事：
 
 - **自动捕获**：用户提问与助手回复按事件写入本地、可直接查看的记忆库，同一事件只写一次；
 - **自动召回**：每一步开始前，把与当前请求相关的记忆包装成 `<system-reminder>` 注入上下文；
@@ -17,7 +17,7 @@ DSH 刻意不自带记忆插件。它提供的是原语：`AGENTS.md` 指令加�
 
 Hermes 生态里的记忆插件（例如 [MemOS 本地插件](https://memos-docs.openmem.net/cn/openclaw/hermes_local_plugin/)）用 LLM + embedding + SQLite 做这个闭环。本插件用更小的体积做同一件事：
 
-| Hermes / MemOS 本地插件 | dsh-memory |
+| Hermes / MemOS 本地插件 | dsh-memory-forge |
 | --- | --- |
 | 全量对话捕获、分片、向量化入库 | 按轮次捕获进 append-only JSONL，不做向量化 |
 | 自动召回注入 system 上下文 | 自动召回，作为一条可回放的 `user` 消息在第 1 步注入 |
@@ -29,7 +29,7 @@ Hermes 生态里的记忆插件（例如 [MemOS 本地插件](https://memos-docs
 
 取舍是明确的：没有语义检索、没有后台摘要，换来零依赖、零守护进程、可 `git diff` 的数据格式，以及能装进任何 DSH profile。
 
-npm 上另有一个同名但无关的包 `dsh-memory`（SQLite FTS5，固定+最近优先召回）。本项目独立实现，差别在检索方式和技能：召回与当前请求相关而不是按时间排序，并且能把流程蒸馏成真正的技能。
+npm 上另有一个无关的包 `dsh-memory`（SQLite FTS5，固定+最近优先召回）。本项目独立实现，差别在检索方式和技能：召回与当前请求相关而不是按时间排序，并且能把流程蒸馏成真正的技能。
 
 ## 安装
 
@@ -56,15 +56,15 @@ dsh plugin --profile <profile> add file:<本仓库绝对路径>
 ### 从 GitHub 安装
 
 ```bash
-dsh plugin --profile <profile> add git+https://github.com/Ricky74192/dsh-memory.git
+dsh plugin --profile <profile> add git+https://github.com/Ricky74192/dsh-memory-forge.git
 # 没装 git 也可以直接用仓库归档：
-dsh plugin --profile <profile> add https://github.com/Ricky74192/dsh-memory/archive/refs/heads/main.tar.gz
+dsh plugin --profile <profile> add https://github.com/Ricky74192/dsh-memory-forge/archive/refs/heads/main.tar.gz
 ```
 
-以上都针对本仓库实测通过。注意 npm 上的 `dsh-memory` 是另一个不相关的第三方包（SQLite FTS5 实现），直接写 `dsh plugin add dsh-memory` 装到的是它——请从本仓库安装，或固定到 release 资产：
+以上都针对本仓库实测通过。npm 发布后最短的安装命令是 `dsh plugin add dsh-memory-forge-forge`；在那之前，从本仓库安装或固定到 release 资产：
 
 ```bash
-dsh plugin --profile <profile> add https://github.com/Ricky74192/dsh-memory/releases/download/v0.1.0/dsh-memory-0.1.0.tgz
+dsh plugin --profile <profile> add https://github.com/Ricky74192/dsh-memory-forge-forge/releases/download/v0.1.1/dsh-memory-forge-forge-0.1.1.tgz
 ```
 
 ### 手动安装（开发用）
@@ -75,7 +75,7 @@ node scripts/dev-install.mjs --profile memdev --debug \
   --skills-root  "$PWD/.e2e/agents-home/skills"
 ```
 
-它会把本包复制到 `<DSH_HOME>/profiles/memdev/node_modules/dsh-memory` 并写入 loader 行；`--uninstall` 移除。
+它会把本包复制到 `<DSH_HOME>/profiles/memdev/node_modules/dsh-memory-forge` 并写入 loader 行；`--uninstall` 移除。
 
 ### 启用
 
@@ -84,7 +84,7 @@ node scripts/dev-install.mjs --profile memdev --debug \
 ```yaml
 - insert:
     - id: memory
-      name: 'dsh-memory'
+      name: 'dsh-memory-forge'
       config:
         maxRecallItems: 4
         recallMinScore: 0.22
@@ -131,7 +131,7 @@ agent/pre-step（第 1 步）
   │        上一轮的助手消息（来自会话日志，按 seq 去重）
   ├─ 召回  query = 最新的用户文本
   │        rank(工作区 ∪ 全局) → 过滤本轮捕获 → 渲染注入块
-  └─ 注入  追加一条 source.kind 为 `dsh-memory` 的 `user` 消息
+  └─ 注入  追加一条 source.kind 为 `dsh-memory-forge` 的 `user` 消息
 ```
 
 几个关键设计：

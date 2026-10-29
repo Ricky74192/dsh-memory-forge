@@ -1,5 +1,5 @@
 /**
- * Skill materialization for dsh-memory.
+ * Skill materialization for dsh-memory-forge.
  *
  * A distilled skill is a directory bundle `<skillsRoot>/<name>/SKILL.md`, the
  * layout `@deepseek-ai/dsh-skill-filesystem` discovers under the user skill root.

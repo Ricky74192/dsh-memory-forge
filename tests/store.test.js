@@ -13,7 +13,7 @@ const NOW = Date.UTC(2026, 9, 29)
  * @returns {{store: MemoryStore, root: string, warnings: string[]}} the fixture.
  */
 function fixture() {
-  const root = mkdtempSync(join(tmpdir(), 'dsh-memory-store-'))
+  const root = mkdtempSync(join(tmpdir(), 'dsh-memory-forge-store-'))
   const warnings = []
   const store = new MemoryStore({ root, now: () => NOW, logger: { warn: (message) => warnings.push(message) } })
   return { store, root, warnings }

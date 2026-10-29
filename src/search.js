@@ -1,5 +1,5 @@
 /**
- * Retrieval scoring for dsh-memory.
+ * Retrieval scoring for dsh-memory-forge.
  *
  * Everything here is pure: tokenization, the BM25 statistics over a snapshot of
  * entries, and the relevance blend. No filesystem, clock, or logger access, which

@@ -1,6 +1,6 @@
 {
-  "name": "dsh-memory",
-  "version": "0.1.0",
+  "name": "dsh-memory-forge",
+  "version": "0.1.1",
   "description": "Long-term memory and self-evolving skills for DeepSeek Harness (dsh)",
   "type": "module",
   "main": "index.js",

@@ -1,5 +1,5 @@
 /**
- * Configuration normalization for the dsh-memory plugin.
+ * Configuration normalization for the dsh-memory-forge plugin.
  *
  * The plugin deliberately exports no Cordis `Config` schema: a Host-only bundle
  * must load with no dependencies, and a schemastery schema would add one. Values

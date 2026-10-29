@@ -16,8 +16,8 @@ const CWD = 'C:\\Work\\Project'
  * @returns {{tools: Map<string, any>, store: MemoryStore, skillsRoot: string, exec: any, key: string}} the fixture.
  */
 function fixture() {
-  const store = new MemoryStore({ root: mkdtempSync(join(tmpdir(), 'dsh-memory-tools-')), now: () => NOW, logger: { warn: () => {} } })
-  const skillsRoot = mkdtempSync(join(tmpdir(), 'dsh-memory-tools-skills-'))
+  const store = new MemoryStore({ root: mkdtempSync(join(tmpdir(), 'dsh-memory-forge-tools-')), now: () => NOW, logger: { warn: () => {} } })
+  const skillsRoot = mkdtempSync(join(tmpdir(), 'dsh-memory-forge-tools-skills-'))
   const config = { maxCaptureChars: 4000, skillsRoot, includeGlobalScope: true, halfLifeDays: 30 }
   const tools = buildTools({ store, config, logger: { info: () => {}, warn: () => {} } })
   const exec = { agent: { session: { id: 'session-1', header: { cwd: CWD } } } }

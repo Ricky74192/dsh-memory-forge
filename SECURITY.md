@@ -1,6 +1,6 @@
 # Data and privacy
 
-`dsh-memory` stores conversation text on the machine running the harness. This
+`dsh-memory-forge` stores conversation text on the machine running the harness. This
 page states exactly what is written, where it goes, and how to remove it.
 
 ## What is stored

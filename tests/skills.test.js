@@ -11,7 +11,7 @@ import { isSkillName, validateSkillInput, writeSkill } from '../src/skills.js'
  * @returns {string} the directory.
  */
 function skillsRoot() {
-  return mkdtempSync(join(tmpdir(), 'dsh-memory-skills-'))
+  return mkdtempSync(join(tmpdir(), 'dsh-memory-forge-skills-'))
 }
 
 test('isSkillName accepts kebab-case and rejects everything the registry rejects', () => {
@@ -58,7 +58,7 @@ test('writeSkill creates then updates a bundle in place', () => {
   const document = readFileSync(first.path, 'utf8')
   assert.match(document, /^---\n/)
   assert.match(document, /name: verify-release/)
-  assert.match(document, /generatedBy: dsh-memory/)
+  assert.match(document, /generatedBy: dsh-memory-forge/)
 
   const second = writeSkill({
     root,

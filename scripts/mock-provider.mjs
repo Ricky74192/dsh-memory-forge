@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Offline Anthropic-Messages mock provider for dsh-memory end-to-end checks.
+ * Offline Anthropic-Messages mock provider for dsh-memory-forge end-to-end checks.
  *
  * The harness talks to a DeepSeek endpoint over the Anthropic Messages protocol.
  * This server implements the streaming subset the harness uses, replays a script
