@@ -167,6 +167,7 @@ No API key is needed; the mock provider records every request body so assertions
 - **Lexical retrieval only.** BM25-style scoring handles identifiers, paths, and CJK bigrams well, but it will miss paraphrase-only matches that an embedding model would find.
 - **No background summarization.** Memories are conversation turns and explicit notes; there is no task-summary pipeline. DSH's `compaction` plugin already owns context compression.
 - **Capture happens on the first step of a turn.** A turn aborted during its first step may leave its user message stored without a reply; that is accurate, if occasionally noisy.
+- **Subagent sessions are captured too.** Delegated children run the same profile, so their turns enter the same workspace namespace. Disable utoCapture if that is unwanted.
 - **One writer per file.** Concurrent harness processes appending to the same namespace can interleave, but each JSONL line is written with a single `appendFileSync`, so lines stay intact. Delete rewrites through a temp file.
 - **Skills are written, not curated.** The plugin validates names and frontmatter, but deciding whether a procedure is worth keeping is the model's call.
 - **No viewer.** The files are plain JSONL; a UI plugin would be a separate package.

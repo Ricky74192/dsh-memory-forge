@@ -313,8 +313,9 @@ export function apply(ctx, rawConfig) {
         const block = renderRecall(ranked, { maxChars: config.recallMaxChars, header: RECALL_HEADER })
         if (block === '') return decision
 
+        const messages = Array.isArray(decision.messages) ? decision.messages : []
         logger.info(`recalled ${ranked.length} memories (top ${ranked[0].score.toFixed(2)}) for turn ${turn}`)
-        return { ...decision, messages: [...decision.messages, recallMessage(block)] }
+        return { ...decision, messages: [...messages, recallMessage(block)] }
       } catch (error) {
         logger.warn(`recall skipped: ${error instanceof Error ? error.message : String(error)}`)
         return decision
