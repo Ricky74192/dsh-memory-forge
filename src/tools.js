@@ -79,7 +79,7 @@ export function buildTools(context) {
         },
         render: (_args, value) => textResult(`Saved memory ${value.id} to the ${value.scope} namespace (${value.chars} chars).`),
       },
-      execute(args, exec) {
+      async execute(args, exec) {
         if (typeof args.text !== 'string' || args.text.trim() === '') throw new Error('memory_save: text must be a non-empty string')
         const text = clipText(args.text, config.maxCaptureChars)
         const record = store.append({
@@ -93,12 +93,12 @@ export function buildTools(context) {
           source: 'memory_save',
         })
         logger.info?.(`dsh-memory: saved ${record.id} (${record.scope})`)
-        return Promise.resolve({
+        return {
           id: record.id,
           scope: record.scope,
           storedAt: new Date(record.createdAt).toISOString(),
           chars: record.text.length,
-        })
+        }
       },
     },
 
@@ -153,7 +153,7 @@ export function buildTools(context) {
           )
         },
       },
-      execute(args, exec) {
+      async execute(args, exec) {
         if (typeof args.query !== 'string' || args.query.trim() === '') throw new Error('memory_search: query must be a non-empty string')
         const scope = args.scope === 'workspace' || args.scope === 'global' ? args.scope : 'all'
         const limit = Math.min(50, Math.max(1, Number.isFinite(args.limit) ? Math.trunc(args.limit) : 8))
@@ -166,7 +166,7 @@ export function buildTools(context) {
           minScore,
           halfLifeDays: config.halfLifeDays,
         })
-        return Promise.resolve({
+        return {
           total: ranked.length,
           results: ranked.map(({ entry, scope: entryScope, score }) => ({
             id: entry.id,
@@ -177,7 +177,7 @@ export function buildTools(context) {
             ...(Number.isFinite(entry.createdAt) ? { createdAt: new Date(entry.createdAt).toISOString() } : {}),
             tags: Array.isArray(entry.tags) ? entry.tags : [],
           })),
-        })
+        }
       },
     },
 
@@ -206,10 +206,10 @@ export function buildTools(context) {
         },
         render: (_args, value) => textResult(value.removed ? `Removed memory from the ${value.scope} namespace.` : 'No memory with that id exists in this workspace.'),
       },
-      execute(args, exec) {
+      async execute(args, exec) {
         if (typeof args.id !== 'string' || args.id === '') throw new Error('memory_forget: id must be a non-empty string')
         const outcome = store.remove(args.id, workspaceOf(exec), { includeGlobal: config.includeGlobalScope })
-        return Promise.resolve(outcome)
+        return outcome
       },
     },
 
@@ -244,7 +244,7 @@ export function buildTools(context) {
         },
         render: (_args, value) => textResult(`${value.status === 'created' ? 'Created' : 'Updated'} skill ${value.path} (${value.bytes} bytes).`),
       },
-      execute(args, exec) {
+      async execute(args, exec) {
         const violations = validateSkillInput(args)
         if (violations.length > 0) throw new Error(`memory_distill_skill: ${violations.join('; ')}`)
         const result = writeSkill({
@@ -265,7 +265,7 @@ export function buildTools(context) {
           source: 'memory_distill_skill',
         })
         logger.info?.(`dsh-memory: ${result.status} skill ${result.path}`)
-        return Promise.resolve(result)
+        return result
       },
     },
   ]

@@ -149,7 +149,7 @@ The store tolerates damaged lines (it skips them with a warning) and rewrites at
 ## Verify
 
 ```bash
-node --test                      # 46 unit tests: retrieval, store, rendering, config
+node --test                      # 62 unit tests: retrieval, store, rendering, config
 node scripts/e2e.mjs --profile memdev   # 4 real headless turns against a mock provider
 ```
 
@@ -179,6 +179,10 @@ No API key is needed; the mock provider records every request body so assertions
 - Optional embedding backend behind the same store interface.
 - A `memory_stats` tool and a compaction hook that expires superseded notes.
 - Web UI page listing, searching, and deleting memories.
+
+## Data and privacy
+
+The plugin stores conversation text locally; [SECURITY.md](SECURITY.md) states exactly what is written, where it lives, what becomes model-visible, and how to delete it.
 
 ## License
 

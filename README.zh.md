@@ -149,7 +149,7 @@ $DSH_HOME/skills/<name>/SKILL.md     # 蒸馏出的技能
 ## 验证
 
 ```bash
-node --test                      # 46 个单元测试：检索、存储、渲染、配置
+node --test                      # 62 个单元测试：检索、存储、渲染、配置
 node scripts/e2e.mjs --profile memdev   # 4 个真实 headless 轮次，跑在 mock provider 上
 ```
 
@@ -179,6 +179,10 @@ node scripts/e2e.mjs --profile memdev   # 4 个真实 headless 轮次，跑在 m
 - 在同一个存储接口后面接可选的 embedding 后端。
 - `memory_stats` 工具，以及让被取代的旧记忆过期压缩的钩子。
 - Web 端记忆列表 / 搜索 / 删除页面。
+
+## 数据与隐私
+
+插件会把对话文本存在本机，[SECURITY.md](SECURITY.md) 说明具体写入什么、存在哪里、哪些内容会进入模型请求，以及怎么删除。
 
 ## 许可证
 

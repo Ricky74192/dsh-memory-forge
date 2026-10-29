@@ -22,5 +22,5 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Skill distillation into `<skillsRoot>/<name>/SKILL.md` bundles that the
   harness's skill registry discovers in later sessions.
 - Config validation with per-key warnings; `debug` file logging.
-- 46 unit tests plus a four-phase offline end-to-end check that drives real
+- 62 unit tests plus a four-phase offline end-to-end check that drives real
   headless harness turns against a bundled Anthropic-Messages mock provider.

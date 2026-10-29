@@ -18,7 +18,9 @@
     "icon.svg",
     "README.md",
     "README.zh.md",
-    "LICENSE"
+    "LICENSE",
+    "SECURITY.md",
+    "CHANGELOG.md"
   ],
   "engines": {
     "node": ">=22"
