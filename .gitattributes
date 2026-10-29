@@ -1,0 +1,7 @@
+# Normalize line endings so the repository stays reviewable across platforms.
+* text=auto eol=lf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.png binary
+*.jpg binary
+*.webp binary

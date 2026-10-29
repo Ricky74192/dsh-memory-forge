@@ -1,0 +1,9 @@
+# Bundle patch for dsh-memory: one Host row mounting the plugin for this profile.
+# Users override individual keys in their own cordis.patch.yml; a matching
+# override replaces this row's whole `config` block.
+- insert:
+    - id: memory
+      name: 'dsh-memory'
+      config:
+        maxRecallItems: 4
+        recallMinScore: 0.22

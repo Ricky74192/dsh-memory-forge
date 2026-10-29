@@ -1,0 +1,46 @@
+{
+  "name": "dsh-memory",
+  "version": "0.1.0",
+  "description": "Long-term memory and self-evolving skills for DeepSeek Harness (dsh)",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "src/**/*.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "README.zh.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "cordis",
+    "cordis-plugin",
+    "memory",
+    "agent-memory",
+    "skills"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "e2e": "node scripts/e2e.mjs",
+    "dev:install": "node scripts/dev-install.mjs"
+  },
+  "license": "MIT",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
