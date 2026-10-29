@@ -29,6 +29,8 @@ Hermes 生态里的记忆插件（例如 [MemOS 本地插件](https://memos-docs
 
 取舍是明确的：没有语义检索、没有后台摘要，换来零依赖、零守护进程、可 `git diff` 的数据格式，以及能装进任何 DSH profile。
 
+npm 上另有一个同名但无关的包 `dsh-memory`（SQLite FTS5，固定+最近优先召回）。本项目独立实现，差别在检索方式和技能：召回与当前请求相关而不是按时间排序，并且能把流程蒸馏成真正的技能。
+
 ## 安装
 
 要求：带 `@deepseek-ai/dsh-base` 的 DSH（`web`、`headless`、`tui` 等随发行版 profile 均可）、Node.js ≥ 22。
@@ -59,7 +61,11 @@ dsh plugin --profile <profile> add git+https://github.com/Ricky74192/dsh-memory.
 dsh plugin --profile <profile> add https://github.com/Ricky74192/dsh-memory/archive/refs/heads/main.tar.gz
 ```
 
-两种方式都针对本仓库实测通过；直接写 `dsh plugin add dsh-memory` 需要先发布到 npm，目前还没发。
+以上都针对本仓库实测通过。注意 npm 上的 `dsh-memory` 是另一个不相关的第三方包（SQLite FTS5 实现），直接写 `dsh plugin add dsh-memory` 装到的是它——请从本仓库安装，或固定到 release 资产：
+
+```bash
+dsh plugin --profile <profile> add https://github.com/Ricky74192/dsh-memory/releases/download/v0.1.0/dsh-memory-0.1.0.tgz
+```
 
 ### 手动安装（开发用）
 

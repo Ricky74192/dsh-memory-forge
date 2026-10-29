@@ -29,6 +29,8 @@ Hermes-style memory plugins (for example the [MemOS local plugin](https://memos-
 
 The trade-off is explicit: no semantic search and no background summarization, in exchange for zero dependencies, zero daemons, a format you can `git diff`, and a plugin that installs into any DSH profile.
 
+An unrelated package also called `dsh-memory` exists on npm (SQLite FTS5 store, pinned-plus-recent recall). This project is independent and differs where it matters for retrieval: recall is query-relevant rather than recency-ordered, and procedures can be distilled into real skills.
+
 ## Install
 
 Requires DSH with `@deepseek-ai/dsh-base` (any shipped profile: `web`, `headless`, `tui`, 鈥? and Node.js 鈮?22.
@@ -59,7 +61,11 @@ dsh plugin --profile <profile> add git+https://github.com/Ricky74192/dsh-memory.
 dsh plugin --profile <profile> add https://github.com/Ricky74192/dsh-memory/archive/refs/heads/main.tar.gz
 ```
 
-Both were verified against this repository. A bare `dsh plugin add dsh-memory` needs an npm release, which has not happened yet.
+Both were verified against this repository. The npm name `dsh-memory` already belongs to an unrelated third-party package, so a bare `dsh plugin add dsh-memory` installs that one — always install from this repository or pin the release asset:
+
+```bash
+dsh plugin --profile <profile> add https://github.com/Ricky74192/dsh-memory/releases/download/v0.1.0/dsh-memory-0.1.0.tgz
+```
 
 ### Manual (development)
 
