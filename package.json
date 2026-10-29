@@ -1,7 +1,7 @@
 {
   "name": "dsh-memory-forge",
   "version": "0.1.1",
-  "description": "Long-term memory and self-evolving skills for DeepSeek Harness (dsh)",
+  "description": "Memory that becomes skill for DeepSeek Harness: capture turns, recall what matters, forge procedures into real SKILL.md files",
   "type": "module",
   "main": "index.js",
   "exports": {
