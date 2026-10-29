@@ -51,6 +51,16 @@ dsh plugin --profile <profile> add file:<本仓库绝对路径>
 
 `desktop` profile 由 Electron 应用独占，请改用插件页或 `plugin_manager`。`dsh plugin` 会把参数转发给 pnpm，因此 `pnpm` 必须在 `PATH` 上；`file:` 依赖是复制安装，改完 checkout 后需要重新安装。
 
+### 从 GitHub 安装
+
+```bash
+dsh plugin --profile <profile> add git+https://github.com/Ricky74192/dsh-memory.git
+# 没装 git 也可以直接用仓库归档：
+dsh plugin --profile <profile> add https://github.com/Ricky74192/dsh-memory/archive/refs/heads/main.tar.gz
+```
+
+两种方式都针对本仓库实测通过；直接写 `dsh plugin add dsh-memory` 需要先发布到 npm，目前还没发。
+
 ### 手动安装（开发用）
 
 ```bash

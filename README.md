@@ -51,6 +51,16 @@ dsh plugin --profile <profile> add file:<absolute path to this checkout>
 
 The `desktop` profile is owned by the Electron application; use the Plugins page or `plugin_manager` for it instead of the CLI. `dsh plugin` forwards to pnpm, so `pnpm` must be on `PATH`. A `file:` dependency is installed as a copy, so reinstall after editing the checkout.
 
+### From GitHub
+
+```bash
+dsh plugin --profile <profile> add git+https://github.com/Ricky74192/dsh-memory.git
+# without git installed, the repository archive works too:
+dsh plugin --profile <profile> add https://github.com/Ricky74192/dsh-memory/archive/refs/heads/main.tar.gz
+```
+
+Both were verified against this repository. A bare `dsh plugin add dsh-memory` needs an npm release, which has not happened yet.
+
 ### Manual (development)
 
 ```bash
