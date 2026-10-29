@@ -28,6 +28,14 @@ test('entryText includes tags and kind so they participate in retrieval', () => 
   assert.equal(entryText({ text: 'build passes', tags: ['windows'], kind: 'note' }), 'build passes windows note')
 })
 
+test('function words are dropped so coverage reflects content terms', () => {
+  assert.deepEqual(tokenize('how do we build the project'), ['build', 'project'])
+  const entries = [memory('a', 'The project builds with pnpm and the release artifact is verified with pnpm pack.')]
+  const ranked = rankEntries(entries, 'How do we build a release of this project?', { now: NOW, minScore: 0.22 })
+  assert.equal(ranked.length, 1, 'a content-term match clears the default recall threshold')
+  assert.ok(ranked[0].coverage > 0.9, `coverage ${ranked[0].coverage} must ignore function words`)
+})
+
 test('rankEntries prefers the document that covers more of the query', () => {
   const entries = [
     memory('a', 'The build runs with pnpm and requires Node 24.'),

@@ -49,7 +49,7 @@ A published package can be installed the same way with its registry spec.
 dsh plugin --profile <profile> add file:<absolute path to this checkout>
 ```
 
-The `desktop` profile is owned by the Electron application; use the Plugins page or `plugin_manager` for it instead of the CLI.
+The `desktop` profile is owned by the Electron application; use the Plugins page or `plugin_manager` for it instead of the CLI. `dsh plugin` forwards to pnpm, so `pnpm` must be on `PATH`. A `file:` dependency is installed as a copy, so reinstall after editing the checkout.
 
 ### Manual (development)
 
@@ -149,7 +149,7 @@ The store tolerates damaged lines (it skips them with a warning) and rewrites at
 ## Verify
 
 ```bash
-node --test                      # 45 unit tests: retrieval, store, rendering, config
+node --test                      # 46 unit tests: retrieval, store, rendering, config
 node scripts/e2e.mjs --profile memdev   # 4 real headless turns against a mock provider
 ```
 
@@ -159,6 +159,8 @@ The offline end-to-end check runs actual harness turns with `scripts/mock-provid
 - **B** a later turn receives the saved fact inside a recall block;
 - **C** `memory_distill_skill` writes a valid `SKILL.md`;
 - **D** the harness lists that skill in the next session's catalogue.
+
+The same four phases pass against the `npm pack` tarball installed with `dsh plugin add file:<tgz>`, which is the install path a registry package takes.
 
 No API key is needed; the mock provider records every request body so assertions are made against what the model actually received.
 

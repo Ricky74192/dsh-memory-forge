@@ -16,10 +16,11 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Automatic recall injected as a durable `user` message before the first step of
   a turn, framed as a `<system-reminder>` block with a character budget.
 - BM25-style lexical retrieval blended with query coverage and a recency
-  half-life, including CJK bigram tokenization.
+  half-life, including CJK bigram tokenization and function-word filtering so
+  coverage stays meaningful on small corpora.
 - Tools: `memory_save`, `memory_search`, `memory_forget`, `memory_distill_skill`.
 - Skill distillation into `<skillsRoot>/<name>/SKILL.md` bundles that the
   harness's skill registry discovers in later sessions.
 - Config validation with per-key warnings; `debug` file logging.
-- 38 unit tests plus a four-phase offline end-to-end check that drives real
+- 46 unit tests plus a four-phase offline end-to-end check that drives real
   headless harness turns against a bundled Anthropic-Messages mock provider.

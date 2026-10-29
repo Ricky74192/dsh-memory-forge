@@ -25,11 +25,33 @@ const COVERAGE_WEIGHT = 0.65
 const RECENCY_FLOOR = 0.75
 
 /**
+ * Function words that carry no retrieval signal.
+ *
+ * They matter more than they look: a small corpus gives an unmatched "how" or
+ * "的" a high inverse document frequency, so leaving them in the query would
+ * depress coverage for a document that matches every content term. Filtering
+ * them here keeps `recallMinScore` meaningful across corpora of any size.
+ */
+const STOPWORDS = new Set([
+  'a', 'about', 'after', 'all', 'also', 'an', 'and', 'any', 'are', 'as', 'at', 'be', 'been', 'before', 'but', 'by',
+  'can', 'could', 'did', 'do', 'does', 'doing', 'for', 'from', 'had', 'has', 'have', 'he', 'her', 'here', 'him', 'his',
+  'how', 'i', 'if', 'in', 'into', 'is', 'it', 'its', 'just', 'me', 'more', 'most', 'my', 'no', 'not', 'now', 'of', 'on',
+  'once', 'only', 'or', 'other', 'our', 'out', 'over', 'same', 'she', 'should', 'so', 'some', 'such', 'than', 'that',
+  'the', 'their', 'them', 'then', 'there', 'these', 'they', 'this', 'those', 'to', 'too', 'up', 'us', 'very', 'was',
+  'we', 'were', 'what', 'when', 'where', 'which', 'while', 'who', 'whom', 'why', 'will', 'with', 'would', 'you', 'your',
+  '的', '了', '是', '在', '我', '你', '他', '她', '它', '们', '这', '那', '就', '也', '和', '与', '吗', '呢', '吧', '啊',
+  '要', '会', '把', '被', '对', '上', '下', '中', '个', '不', '有', '很', '再', '都', '只', '而', '及', '或', '但', '里',
+  '着', '过', '之', '其', '呢', '吧', '哦', '嗯',
+])
+
+/**
  * Split text into lexical terms.
  *
  * Latin runs are lowercased words with a light plural stemming. CJK runs emit
  * unigrams and bigrams, which gives usable recall without a segmentation model:
  * bigrams carry most of the signal and single characters keep short queries alive.
+ * Function words are dropped because they inflate coverage denominators without
+ * distinguishing documents.
  *
  * @param {string} text - arbitrary text.
  * @returns {string[]} terms in occurrence order, duplicates preserved.
@@ -38,16 +60,19 @@ export function tokenize(text) {
   if (typeof text !== 'string' || text.length === 0) return []
   const normalized = text.normalize('NFKC').toLowerCase()
   const terms = []
+  const push = (term) => {
+    if (!STOPWORDS.has(term)) terms.push(term)
+  }
   for (const match of normalized.matchAll(TOKEN_PATTERN)) {
     const chunk = match[0]
     if (CJK_PATTERN.test(chunk)) {
       const characters = [...chunk]
-      for (const character of characters) terms.push(character)
+      for (const character of characters) push(character)
       for (let index = 0; index + 1 < characters.length; index += 1) terms.push(characters[index] + characters[index + 1])
       continue
     }
-    terms.push(chunk)
-    if (chunk.length > 4 && chunk.endsWith('s')) terms.push(chunk.slice(0, -1))
+    push(chunk)
+    if (chunk.length > 4 && chunk.endsWith('s')) push(chunk.slice(0, -1))
   }
   return terms
 }

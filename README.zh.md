@@ -49,7 +49,7 @@ plugin_manager action=install_bundle target=<本仓库绝对路径>
 dsh plugin --profile <profile> add file:<本仓库绝对路径>
 ```
 
-`desktop` profile 由 Electron 应用独占，请改用插件页或 `plugin_manager`。
+`desktop` profile 由 Electron 应用独占，请改用插件页或 `plugin_manager`。`dsh plugin` 会把参数转发给 pnpm，因此 `pnpm` 必须在 `PATH` 上；`file:` 依赖是复制安装，改完 checkout 后需要重新安装。
 
 ### 手动安装（开发用）
 
@@ -149,7 +149,7 @@ $DSH_HOME/skills/<name>/SKILL.md     # 蒸馏出的技能
 ## 验证
 
 ```bash
-node --test                      # 45 个单元测试：检索、存储、渲染、配置
+node --test                      # 46 个单元测试：检索、存储、渲染、配置
 node scripts/e2e.mjs --profile memdev   # 4 个真实 headless 轮次，跑在 mock provider 上
 ```
 
@@ -159,6 +159,8 @@ node scripts/e2e.mjs --profile memdev   # 4 个真实 headless 轮次，跑在 m
 - **B** 之后的轮次在召回块里收到这条事实；
 - **C** `memory_distill_skill` 写出合法的 `SKILL.md`；
 - **D** harness 在下一个会话的技能目录里列出该技能。
+
+同一套检查在 `npm pack` 出的 tarball 上（`dsh plugin add file:<tgz>`，即注册表安装走的路径）也全部通过。
 
 不需要 API key；mock provider 会记录每个请求体，断言针对模型真正收到的内容。
 
